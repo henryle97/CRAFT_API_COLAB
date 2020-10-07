@@ -42,6 +42,7 @@ class CraftDetection:
             pr.poly = True
 
     def text_detect(self, image):
+
         # if not os.path.exists(image_path):
         #     print("Not exists path")
         #     return []

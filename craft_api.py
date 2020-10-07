@@ -79,7 +79,7 @@ def query_box():
         print(ex)
         return jsonify_str(create_query_result("", "", ex))
 
-    img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    img = np.array(img)
     boxes, total_time = model.text_detect(img)
     result = {'time': total_time, 'boxes': boxes, 'total_box': len(boxes)}
     return result
