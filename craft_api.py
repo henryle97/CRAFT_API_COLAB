@@ -84,11 +84,18 @@ def query_box():
     img = np.array(img)
     boxes, img_draw, total_time = model.text_detect(img)
 
+    boxes_dict = []
+    for box in boxes:
+        for c in box:
+            box_dict = {'top_left': {'x': c[0], 'y': c[1]},
+                        'top_right': {'x'}}
+
+
     result = {'time': total_time, 'boxes': boxes, 'total_box': len(boxes)}
     return result
 
 @app.route("/query_display", methods=['GET', 'POST'])
-def query_box():
+def query_display):
     try:
         if request.method == "GET":
             img_url = request.args.get('url', default='', type=str)
