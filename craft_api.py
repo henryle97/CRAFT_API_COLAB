@@ -81,7 +81,7 @@ def query_box():
 
     img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     boxes, total_time = model.text_detect(img)
-    result = {'time': total_time, 'boxes': boxes}
+    result = {'time': total_time, 'boxes': boxes, 'total_box': len(boxes)}
     return result
 
 

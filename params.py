@@ -18,7 +18,7 @@ refiner_model = "weights/craft_refiner_CTW1500.pth"
 
 # other utils
 horizontal_mode = True              # only horizontal boxes
-ratio_box_horizontal = 0.75          # if number of horizontal boxes is larger than 50%, use horizontal mode
+ratio_box_horizontal = 0.7          # if number of horizontal boxes is larger than 50%, use horizontal mode
 expand_ratio = 0.03                 # expand top, bottom: 3%
 visualize = False
 show_time = True
