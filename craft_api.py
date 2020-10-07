@@ -86,12 +86,16 @@ def query_box():
 
     boxes_dict = []
     for box in boxes:
-        for c in box:
-            box_dict = {'top_left': {'x': c[0], 'y': c[1]},
-                        'top_right': {'x'}}
+        [c1, c2, c3, c4] = box
+        box_dict = {'top_left': {'x': c1[0], 'y': c1[1]},
+                    'top_right': {'x': c2[0], 'y': c2[1]},
+                    'bottom_right': {'x': c3[0], 'y':c3[1]},
+                    'bottom_left': {'x': c4[0], 'y': c4[1]}
+                    }
+        boxes_dict.append(box_dict)
 
 
-    result = {'time': total_time, 'boxes': boxes, 'total_box': len(boxes)}
+    result = {'time': total_time, 'boxes': boxes_dict, 'total_box': len(boxes)}
     return result
 
 @app.route("/query_display", methods=['GET', 'POST'])
