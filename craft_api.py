@@ -39,7 +39,7 @@ def download_image(image_url):
     header = random_headers()
     response = requests.get(image_url, headers=header, stream=True, verify=False, timeout=5)
     image = Image.open(BytesIO(response.content)).convert('RGB')
-    img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    #img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     return img
 
 
@@ -67,7 +67,10 @@ def query_box():
     try:
         if request.method == "GET":
             img_url = request.args.get('url', default='', type=str)
-            img = Image.open(img_url).convert('RGB')
+            if 'http' in img_url:
+              img = download_image(img_url)
+            else:
+              img = Image.open(img_url).convert('RGB')
         else:
             data = request.get_data()
             img = Image.open(BytesIO(data)).convert('RGB')
@@ -85,5 +88,5 @@ def query_box():
 
 if __name__ == "__main__":
     # app.run(pr.host, pr.port, threaded=True, debug=True)
-    app.run(debug=False, port=os.getenv('PORT', 5000))
-
+    #app.run(debug=False, port=os.getenv('PORT', 5000))
+    app.run()

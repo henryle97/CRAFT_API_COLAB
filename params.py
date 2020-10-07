@@ -1,5 +1,5 @@
 
-cuda = False
+cuda = True
 trained_model = "weights/craft_mlt_25k.pth"
 result_folder = "./result/"
 canvas_size = 768             # image size for inference : smaller image --> lower accuracy, default 768
@@ -21,7 +21,7 @@ horizontal_mode = True              # only horizontal boxes
 ratio_box_horizontal = 0.75          # if number of horizontal boxes is larger than 50%, use horizontal mode
 expand_ratio = 0.03                 # expand top, bottom: 3%
 visualize = False
-show_time = False
+show_time = True
 folder_test = False
 
 # api
