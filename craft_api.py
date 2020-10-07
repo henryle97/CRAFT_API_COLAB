@@ -95,7 +95,7 @@ def query_box():
     return result
 
 @app.route("/query_display", methods=['GET', 'POST'])
-def query_display):
+def query_display():
     try:
         if request.method == "GET":
             img_url = request.args.get('url', default='', type=str)
