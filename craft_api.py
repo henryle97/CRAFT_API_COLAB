@@ -118,7 +118,7 @@ def query_display():
     img = np.array(img)
     boxes, img_draw, total_time = model.text_detect(img)
 
-    pil_im = Image.fromarray(img_draw)
+    pil_im = Image.fromarray(cv2.cvtColor(img_draw, cv2.COLOR_RGB2BGR))
     img_result_path = os.path.join("static", "tmp.jpg")
     pil_im.save(img_result_path)
     return render_template("index.html", img_result=img_result_path)

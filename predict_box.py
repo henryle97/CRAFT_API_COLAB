@@ -110,7 +110,7 @@ class CraftDetection:
                     h_box = abs(b - t)
                     t = max(0, t - h_box * pr.expand_ratio)
                     b = min(b + h_box * pr.expand_ratio, height)
-                    x_min, y_min, x_max, y_max = l, t, r, b
+                    # x_min, y_min, x_max, y_max = l, t, r, b
                     # new_box = [x_min, y_min, x_max, y_max]
                     new_box = [[l, t], [r, t], [r, b], [l, b]]
                     new_polys.append(new_box)
@@ -132,7 +132,7 @@ class CraftDetection:
             return boxes, polys, ret_score_text
 
         #if pr.visualize:
-            img_draw = displayResult(img=image[:, :, ::-1], boxes=polys)
+            # img_draw = displayResult(img=image[:, :, ::-1], boxes=polys)
             #plt.imshow(cv2.cvtColor(img_draw, cv2.COLOR_RGB2BGR))
             #plt.show()
 
