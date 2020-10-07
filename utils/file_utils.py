@@ -97,17 +97,17 @@ def displayResult(img, boxes, verticals=None, texts=None):
     img = np.array(img)
 
     # make result file list
-    horizontal = False
-
-    print(type(boxes[0][0]))
-    if isinstance(boxes[0][0], np.float32): # boxes[0][0] = x_min or = [l,t]
-        horizontal = True
-        print("Display horizontal")
+    # horizontal = False
+    #
+    # print(type(boxes[0][0]))
+    # if isinstance(boxes[0][0], np.float32): # boxes[0][0] = x_min or = [l,t]
+    #     horizontal = True
+    #     print("Display horizontal")
     for i, box in enumerate(boxes):
-        if horizontal:
-            [x_min, y_min, x_max, y_max] = box
-            cv2.rectangle(img, (x_min, y_min), (x_max, y_max), color=(0,0,255), thickness=2)
-        else:
+        # if horizontal:
+        #     [x_min, y_min, x_max, y_max] = box
+        #     cv2.rectangle(img, (x_min, y_min), (x_max, y_max), color=(0,0,255), thickness=2)
+        # else:
             poly = np.array(box).astype(np.int32).reshape((-1))
             poly = poly.reshape(-1, 2)
             cv2.polylines(img, [poly.reshape((-1, 1, 2))], True, color=(0, 0, 255), thickness=2)

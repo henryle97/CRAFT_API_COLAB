@@ -1,6 +1,6 @@
 import os
 from random import choice
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import time, requests
 from PIL import Image
 from io import BytesIO
@@ -39,8 +39,8 @@ def download_image(image_url):
     header = random_headers()
     response = requests.get(image_url, headers=header, stream=True, verify=False, timeout=5)
     image = Image.open(BytesIO(response.content)).convert('RGB')
-    #img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-    return img
+    #image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    return image
 
 
 def jsonify_str(output_list):
@@ -51,6 +51,8 @@ def jsonify_str(output_list):
 
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config["CACHE_TYPE"] = "null"
 run_with_ngrok(app)
 
 
@@ -80,10 +82,35 @@ def query_box():
         return jsonify_str(create_query_result("", "", ex))
 
     img = np.array(img)
-    boxes, total_time = model.text_detect(img)
+    boxes, img_draw, total_time = model.text_detect(img)
+
     result = {'time': total_time, 'boxes': boxes, 'total_box': len(boxes)}
     return result
 
+@app.route("/query_display", methods=['GET', 'POST'])
+def query_box():
+    try:
+        if request.method == "GET":
+            img_url = request.args.get('url', default='', type=str)
+            if 'http' in img_url:
+              img = download_image(img_url)
+            else:
+              img = Image.open(img_url).convert('RGB')
+        else:
+            data = request.get_data()
+            img = Image.open(BytesIO(data)).convert('RGB')
+
+    except Exception as ex:
+        print(ex)
+        return jsonify_str(create_query_result("", "", ex))
+
+    img = np.array(img)
+    boxes, img_draw, total_time = model.text_detect(img)
+
+    pil_im = Image.fromarray(img_draw)
+    img_result_path = os.path.join("static", "tmp.jpg")
+    pil_im.save(img_result_path)
+    return render_template("index.html", img_result=img_result_path)
 
 
 if __name__ == "__main__":

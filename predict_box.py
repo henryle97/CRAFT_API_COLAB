@@ -111,7 +111,8 @@ class CraftDetection:
                     t = max(0, t - h_box * pr.expand_ratio)
                     b = min(b + h_box * pr.expand_ratio, height)
                     x_min, y_min, x_max, y_max = l, t, r, b
-                    new_box = [x_min, y_min, x_max, y_max]
+                    # new_box = [x_min, y_min, x_max, y_max]
+                    new_box = [[l, t], [r, t], [r, b], [l, b]]
                     new_polys.append(new_box)
 
                 polys = np.array(new_polys, dtype=np.float32)
@@ -131,14 +132,16 @@ class CraftDetection:
             return boxes, polys, ret_score_text
 
         #if pr.visualize:
-            #img_draw = displayResult(img=image[:, :, ::-1], boxes=polys)
+            img_draw = displayResult(img=image[:, :, ::-1], boxes=polys)
             #plt.imshow(cv2.cvtColor(img_draw, cv2.COLOR_RGB2BGR))
             #plt.show()
+
+        img_draw = displayResult(img=image[:, :, ::-1], boxes=polys)
 
         result_boxes = []
         for box in polys:
             result_boxes.append(box.tolist())
-        return result_boxes, total_time
+        return result_boxes, img_draw, total_time
 
 
     def check_horizontal(self, boxes):
@@ -157,11 +160,10 @@ class CraftDetection:
             return False
 
 
-
-
 if __name__ == "__main__":
     app = CraftDetection()
-    # boxes = app.text_detect("test_imgs/qc_6.jpg", visualize=True, horizontal_mode=True)
+
+    # boxes = app.text_detect("test_imgs/qc_6.jpg")
     # print(boxes)
     # print(boxes)
     # print(score)
