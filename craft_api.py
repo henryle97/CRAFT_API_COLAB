@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 import time, requests
 from PIL import Image
 from io import BytesIO
+from flask_ngrok import run_with_ngrok
 # from flask import send_file
 # import io
 # import uuid
@@ -50,6 +51,7 @@ def jsonify_str(output_list):
 
 
 app = Flask(__name__)
+run_with_ngrok(app)
 
 
 def create_query_result(input_url, results, error=None):
@@ -74,7 +76,7 @@ def query_box():
         print(ex)
         return jsonify_str(create_query_result("", "", ex))
 
-    # img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     boxes, total_time = model.text_detect(img)
     result = {'time': total_time, 'boxes': boxes}
     return result
