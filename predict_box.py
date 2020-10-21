@@ -131,12 +131,14 @@ class CraftDetection:
         if pr.folder_test:
             return boxes, polys, ret_score_text
 
-        #if pr.visualize:
+        img_draw = None
+        if pr.visualize:
             # img_draw = displayResult(img=image[:, :, ::-1], boxes=polys)
             #plt.imshow(cv2.cvtColor(img_draw, cv2.COLOR_RGB2BGR))
             #plt.show()
+            img_draw = displayResult(img=image[:, :, ::-1], boxes=polys)
 
-        img_draw = displayResult(img=image[:, :, ::-1], boxes=polys)
+
 
         result_boxes = []
         for box in polys:

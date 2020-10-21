@@ -4,7 +4,7 @@ from flask import Flask, jsonify, request, render_template
 import time, requests
 from PIL import Image
 from io import BytesIO
-from flask_ngrok import run_with_ngrok
+# from flask_ngrok import run_with_ngrok
 # from flask import send_file
 # import io
 # import uuid
@@ -53,7 +53,7 @@ def jsonify_str(output_list):
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config["CACHE_TYPE"] = "null"
-run_with_ngrok(app)
+# run_with_ngrok(app)
 
 
 def create_query_result(input_url, results, error=None):
@@ -83,14 +83,16 @@ def query_box():
 
     img = np.array(img)
     boxes, img_draw, total_time = model.text_detect(img)
+    # print(img.shape)
+    h, w, _ = img.shape
 
     boxes_dict = []
     for box in boxes:
         [c1, c2, c3, c4] = box
-        box_dict = {'top_left': {'x': c1[0], 'y': c1[1]},
-                    'top_right': {'x': c2[0], 'y': c2[1]},
-                    'bottom_right': {'x': c3[0], 'y':c3[1]},
-                    'bottom_left': {'x': c4[0], 'y': c4[1]}
+        box_dict = {'top_left': {'x': round(c1[0]/w, 4), 'y': round(c1[1]/h, 4)},
+                    'top_right': {'x': round(c2[0]/w, 4), 'y': round(c2[1]/h, 4)},
+                    'bottom_right': {'x': round(c3[0]/w, 4), 'y': round(c3[1]/h, 4)},
+                    'bottom_left': {'x': round(c4[0]/w, 4), 'y': round(c4[1]/h, 4)}
                     }
         boxes_dict.append(box_dict)
 
@@ -125,6 +127,6 @@ def query_display():
 
 
 if __name__ == "__main__":
-    # app.run(pr.host, pr.port, threaded=True, debug=True)
+    app.run(pr.host, pr.port, threaded=True, debug=True)
     #app.run(debug=False, port=os.getenv('PORT', 5000))
-    app.run()
+    # app.run()
