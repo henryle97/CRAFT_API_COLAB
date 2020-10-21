@@ -20,7 +20,7 @@ refiner_model = "weights/craft_refiner_CTW1500.pth"
 horizontal_mode = True              # only horizontal boxes
 ratio_box_horizontal = 0.3          # if number of horizontal boxes is larger than 50%, use horizontal mode
 expand_ratio = 0.04                 # expand top, bottom: 3%
-visualize = True                   # if use query_display
+visualize = False                   # if use query_display
 show_time = True
 folder_test = False
 
